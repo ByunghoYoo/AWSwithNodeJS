@@ -7,16 +7,21 @@ exports.handler = async (event) => {
     console.log("Received: " + JSON.stringify(event, null, 2));
     let response = '';
     try{
+        const id = event.requestContext.requestId;
+        const body = JSON.parse(event.body); 
         var params = {
-            TableName : tableName
-            // FilterExpression : 'Year = :this_year',
-            // ExpressionAttributeValues : {':this_year' : 2015}
+            TableName : tableName,
+            Item: {
+                "id": id,
+                "title": body.title,
+                "category": body.category
+            }
         };
-        const cards = await documentClient.scan(params).promise();
-
+        await documentClient.put(params).promise();
+        
         response = {
             statusCode: 200,
-            body: JSON.stringify(cards),
+            body: JSON.stringify({"id": id}),
         };
     } catch (exception) {
         console.error(exception);

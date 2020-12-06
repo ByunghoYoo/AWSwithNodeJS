@@ -3,11 +3,19 @@ export default class APIHandler {
 
   // TODO: 전체 카드 객체 리스트 반환. 없으면 NULL
   async getCards() {    
-    if(this.dummyData.length === 0) {
-      return null;
+    const request = new APIRequest("GET", "/kanban/cards");
+    const response = await APIProcessor(request);
+    if (response !== "Error") {
+      console.log(response);
+      return response.Items;
     } else {
-      return this.dummyData;
+      return null;
     }
+    // if(this.dummyData.length === 0) {
+    //   return null;
+    // } else {
+    //   return this.dummyData;
+    // }
   }
 
   // TODO: 카드 객체 생성/추가 후 ID 반환
@@ -45,23 +53,33 @@ const HOST = "https://7e14qme0vb.execute-api.ap-northeast-2.amazonaws.com/prod";
 class APIRequest{
   constructor(method, path, body = null) {
     this.method = method;
-    this.url = HOST + path;
+    this.url = HOST+path;
     this.body = body;
   }
 }
 
 // TODO: API 호출 함수
 const APIProcessor = async (request) => {
-  const response = await fetch(url, {
-    method: request.method, // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, cors, *same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: request.body ? JSON.stringify(request.body) : null, // body data type must match "Content-Type" header
-  });
-  console.log(response);
+  try {
+    const response = await fetch(request.url, {
+      method: request.method, // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, cors, *same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: request.body ? JSON.stringify(request.body) : null, // body data type must match "Content-Type" header
+    });
+    switch (response.status) {
+      case 200:
+        return await response.json();
+      default:
+        console.error(await response.json());
+    }
+  } catch (e) {
+    console.error(e)
+  }
+  return "Error";
 };

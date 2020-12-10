@@ -17,7 +17,7 @@ exports.handler = async (event) => {
         await documentClient.delete(params).promise();
         
         response = {
-            statusCode: 200,
+            statusCode: 204,
             headers: {
                 // "Access-Control-Allow-Headers" : "Content-Type",
                 "Access-Control-Allow-Origin": "*",

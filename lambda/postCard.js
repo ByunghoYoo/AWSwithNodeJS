@@ -20,7 +20,7 @@ exports.handler = async (event) => {
         await documentClient.put(params).promise();
         
         response = {
-            statusCode: 200,
+            statusCode: 201,        // https://developer.mozilla.org/ko/docs/Web/HTTP/Status 참조
             headers: {
                 // "Access-Control-Allow-Headers" : "Content-Type",
                 "Access-Control-Allow-Origin": "*",

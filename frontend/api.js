@@ -72,10 +72,10 @@ const APIProcessor = async request => {
     switch (response.status) {
       case 200:
       case 201:
-        return await response.json();
+        return await response.json(); 
       case 204:
         return null;
-      default:
+      default: 
         console.error(await response.json());
     }
   } catch (e) {

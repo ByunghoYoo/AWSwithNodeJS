@@ -11,13 +11,13 @@ exports.handler = async (event) => {
         var params = {
             TableName : tableName,
             Key: {
-              "id": id,
+              id: id,
             }
           };
         await documentClient.delete(params).promise();
         
         response = {
-            statusCode: 204,
+            statusCode: 204,    // https://developer.mozilla.org/ko/docs/Web/HTTP/Status 참조
             headers: {
                 // "Access-Control-Allow-Headers" : "Content-Type",
                 "Access-Control-Allow-Origin": "*",

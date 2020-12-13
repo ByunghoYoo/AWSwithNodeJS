@@ -12,9 +12,9 @@ exports.handler = async (event) => {
         var params = {
             TableName : tableName,
             Item: {
-                "id": id,
-                "title": body.title,
-                "category": body.category
+                id: id,
+                title: body.title,
+                category: body.category
             }
         };
         await documentClient.put(params).promise();

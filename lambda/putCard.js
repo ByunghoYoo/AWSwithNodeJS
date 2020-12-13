@@ -11,7 +11,7 @@ exports.handler = async (event) => {
         const body = JSON.parse(event.body); 
         var params = {
             TableName: tableName,
-            Key: { "id": id },
+            Key: { id: id },
             UpdateExpression: 'set #c = :c, #t = :t',
             ExpressionAttributeNames: {'#c' : 'category', "#t" : "title" },
             ExpressionAttributeValues: {
@@ -22,7 +22,7 @@ exports.handler = async (event) => {
         await documentClient.update(params).promise();
         
         response = {
-            statusCode: 200,
+            statusCode: 204,        // https://developer.mozilla.org/ko/docs/Web/HTTP/Status 참조
             headers: {
                 // "Access-Control-Allow-Headers" : "Content-Type",
                 "Access-Control-Allow-Origin": "*",

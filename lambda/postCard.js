@@ -12,15 +12,15 @@ exports.handler = async (event) => {
         var params = {
             TableName : tableName,
             Item: {
-                "id": id,
-                "title": body.title,
-                "category": body.category
+                id: id,
+                title: body.title,
+                category: body.category
             }
         };
         await documentClient.put(params).promise();
         
         response = {
-            statusCode: 200,
+            statusCode: 201,        // https://developer.mozilla.org/ko/docs/Web/HTTP/Status 참조
             headers: {
                 // "Access-Control-Allow-Headers" : "Content-Type",
                 "Access-Control-Allow-Origin": "*",

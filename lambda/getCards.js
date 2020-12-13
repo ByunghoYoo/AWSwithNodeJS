@@ -16,6 +16,9 @@ exports.handler = async (event) => {
 
         response = {
             statusCode: 200,
+            // CORS로 인해 미등록시 에러가 남
+            // AWS APIgateway에 CORS를 등록함
+            // 람다 프록시통합을 사용했을 경우 람다 함수에 아래와 같이 response에 headers를 넣어주어야 함 
             headers: {
                 // "Access-Control-Allow-Headers" : "Content-Type",
                 "Access-Control-Allow-Origin": "*",
